@@ -1,7 +1,6 @@
 package com.banking.bankservice.service;
 
 import com.banking.bankservice.model.User;
-
 import java.util.Optional;
 
 public interface UserService {

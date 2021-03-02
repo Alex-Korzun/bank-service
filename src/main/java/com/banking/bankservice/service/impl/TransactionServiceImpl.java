@@ -19,7 +19,8 @@ public class TransactionServiceImpl implements TransactionService {
     private final AccountService accountService;
 
     @Autowired
-    public TransactionServiceImpl(TransactionRepository transactionRepository, AccountService accountService) {
+    public TransactionServiceImpl(TransactionRepository transactionRepository,
+                                  AccountService accountService) {
         this.transactionRepository = transactionRepository;
         this.accountService = accountService;
     }
@@ -41,7 +42,8 @@ public class TransactionServiceImpl implements TransactionService {
         if (amount < accountFrom.getBalance()) {
             accountFrom.setBalance(accountFrom.getBalance() - amount);
         } else {
-            throw new RuntimeException("Can't provide this transaction. Not enough money on your account.");
+            throw new RuntimeException("Can't provide this transaction. "
+                    + "Not enough money on your account.");
         }
         transactionRepository.save(transactionFromAccount);
         accountService.save(accountFrom);

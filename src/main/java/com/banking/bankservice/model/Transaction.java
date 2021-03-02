@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
 import lombok.Data;
@@ -18,10 +19,10 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @Column(name = "account_from")
+    @JoinColumn(name = "account_from")
     private Account accountFrom;
     @ManyToOne
-    @Column(name = "account_to")
+    @JoinColumn(name = "account_to")
     private Account accountTo;
     private Double amount;
     private LocalDateTime date;

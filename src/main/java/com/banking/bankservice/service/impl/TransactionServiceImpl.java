@@ -18,12 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository transactionRepository;
     private final AccountService accountService;
+    private final Converter converter;
 
     @Autowired
     public TransactionServiceImpl(TransactionRepository transactionRepository,
-                                  AccountService accountService) {
+                                  AccountService accountService, Converter converter) {
         this.transactionRepository = transactionRepository;
         this.accountService = accountService;
+        this.converter = converter;
     }
 
     @Override
@@ -38,6 +40,10 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transactionFromAccount = new Transaction();
         transactionFromAccount.setAccountFrom(accountFrom);
         transactionFromAccount.setAccountTo(accountTo);
+        if (accountFrom.getCurrencyType() != accountTo.getCurrencyType()) {
+            amount = converter.convert(accountFrom.getCurrencyType(),
+                    accountTo.getCurrencyType(), amount);
+        }
         transactionFromAccount.setAmount(amount);
         transactionFromAccount.setDate(LocalDateTime.now());
         transactionFromAccount.setType(Transaction.TypeOfOperation.OUTCOMING);

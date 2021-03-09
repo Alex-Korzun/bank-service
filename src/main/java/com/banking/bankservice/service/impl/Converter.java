@@ -12,7 +12,7 @@ public class Converter {
     private final HttpClientService httpClientService;
 
     @Autowired
-    public Converter(HttpClientService httpClientService)cr {
+    public Converter(HttpClientService httpClientService) {
         this.httpClientService = httpClientService;
     }
 

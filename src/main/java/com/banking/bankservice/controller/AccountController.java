@@ -9,6 +9,8 @@ import com.banking.bankservice.model.dto.response.AccountResponseDto;
 import com.banking.bankservice.model.dto.response.TransactionResponseDto;
 import com.banking.bankservice.service.AccountService;
 import com.banking.bankservice.service.TransactionService;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -18,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/accounts")
@@ -70,9 +69,9 @@ public class AccountController {
     }
 
     @GetMapping("/history/{accountNumber}")
-    public List<TransactionResponseDto> getHistoryByAccountNumber
-            (@PathVariable String accountNumber, @RequestParam(defaultValue = "1") Integer page,
-             @RequestParam(defaultValue = "10") Integer size) {
+    public List<TransactionResponseDto> getHistoryByAccountNumber(
+            @PathVariable String accountNumber, @RequestParam(defaultValue = "1") Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
         return transactionService.getAllByAccount(page, size, accountService
                 .getAccountByAccountNumber(accountNumber)).stream()
                 .map(transactionMapper::toDto)

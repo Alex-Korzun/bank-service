@@ -16,7 +16,7 @@ public class AccountMapperImpl implements AccountMapper {
         account.setBalance(accountRequestDto.getBalance());
         account.setActive(true);
         account.setCurrencyType(Currency.valueOf(accountRequestDto.getCurrencyType().toString()));
-        return  account;
+        return account;
     }
 
     @Override

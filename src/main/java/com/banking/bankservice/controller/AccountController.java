@@ -70,8 +70,9 @@ public class AccountController {
 
     @GetMapping("/history/{accountNumber}")
     public List<TransactionResponseDto> getHistoryByAccountNumber(
-            @PathVariable String accountNumber, @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = "10") Integer size) {
+            @PathVariable String accountNumber,
+            @RequestParam(defaultValue = "0", required = false) Integer page,
+            @RequestParam(defaultValue = "10", required = false) Integer size) {
         return transactionService.getAllByAccount(page, size, accountService
                 .getAccountByAccountNumber(accountNumber)).stream()
                 .map(transactionMapper::toDto)

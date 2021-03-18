@@ -14,7 +14,6 @@ public class AccountMapperImpl implements AccountMapper {
         Account account = new Account();
         account.setAccountNumber(accountRequestDto.getAccountNumber());
         account.setBalance(accountRequestDto.getBalance());
-        account.setActive(true);
         account.setCurrencyType(Currency.valueOf(accountRequestDto.getCurrencyType().toString()));
         return account;
     }

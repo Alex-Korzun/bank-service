@@ -1,10 +1,13 @@
 package com.banking.bankservice.controller;
 
 import com.banking.bankservice.mapper.UserMapper;
+import com.banking.bankservice.model.Role;
 import com.banking.bankservice.model.User;
 import com.banking.bankservice.model.dto.request.UserRequestDto;
 import com.banking.bankservice.model.dto.response.UserResponseDto;
+import com.banking.bankservice.service.RoleService;
 import com.banking.bankservice.service.UserService;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,24 +24,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
     private final UserMapper userMapper;
+    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService, UserMapper userMapper) {
+    public UserController(UserService userService,
+                          UserMapper userMapper, RoleService roleService) {
         this.userService = userService;
         this.userMapper = userMapper;
+        this.roleService = roleService;
     }
 
     @PostMapping
     public void create(@RequestBody UserRequestDto userRequestDto) {
         User user = userMapper.fromDto(userRequestDto);
+        user.setRoles(Set.of(roleService.getByRoleName("USER")));
         userService.save(user);
     }
 
     @PutMapping("/{userId}")
     public UserResponseDto update(@RequestBody UserRequestDto userRequestDto,
                                   @PathVariable Long userId) {
+        Set<Role> roles = userService.getById(userId).getRoles();
         User user = userMapper.fromDto(userRequestDto);
         user.setId(userId);
+        user.setRoles(roles);
         userService.save(user);
         return userMapper.toDto(user);
     }

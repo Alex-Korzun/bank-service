@@ -31,5 +31,8 @@ public class DataInitializer {
         adminRole.setRoleName(Role.Roles.ADMIN);
         roleService.save(adminRole);
         userService.save(admin);
+
+        Role userRole = new Role();
+        roleService.save(userRole);
     }
 }

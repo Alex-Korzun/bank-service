@@ -2,7 +2,6 @@ package com.banking.bankservice.mapper.impl;
 
 import com.banking.bankservice.mapper.AccountMapper;
 import com.banking.bankservice.model.Account;
-import com.banking.bankservice.model.Currency;
 import com.banking.bankservice.model.dto.request.AccountRequestDto;
 import com.banking.bankservice.model.dto.response.AccountResponseDto;
 import com.banking.bankservice.service.UserService;
@@ -23,7 +22,6 @@ public class AccountMapperImpl implements AccountMapper {
         Account account = new Account();
         account.setAccountNumber(accountRequestDto.getAccountNumber());
         account.setBalance(accountRequestDto.getBalance());
-        account.setCurrencyType(Currency.valueOf(accountRequestDto.getCurrencyType().toString()));
         account.setCurrencyType(accountRequestDto.getCurrencyType());
         account.setUser(userService.getById(accountRequestDto.getUserId()));
         return account;

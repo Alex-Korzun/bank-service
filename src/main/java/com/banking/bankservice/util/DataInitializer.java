@@ -33,6 +33,7 @@ public class DataInitializer {
         userService.save(admin);
 
         Role userRole = new Role();
+        userRole.setRoleName(Role.Roles.USER);
         roleService.save(userRole);
     }
 }

@@ -1,5 +1,6 @@
 package com.banking.bankservice.service.impl;
 
+import com.banking.bankservice.exception.NoSuchEntityException;
 import com.banking.bankservice.model.Role;
 import com.banking.bankservice.repository.RoleRepository;
 import com.banking.bankservice.service.RoleService;
@@ -22,6 +23,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getByRoleName(String name) {
-        return roleRepository.getByRoleName(Role.Roles.valueOf(name)).get();
+        return roleRepository.getByRoleName(Role.Roles.valueOf(name))
+                .orElseThrow(() -> new NoSuchEntityException("Can't get Role by name " + name));
     }
 }

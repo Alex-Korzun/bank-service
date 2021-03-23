@@ -1,5 +1,6 @@
 package com.banking.bankservice.service.impl;
 
+import com.banking.bankservice.exception.NoSuchEntityException;
 import com.banking.bankservice.model.User;
 import com.banking.bankservice.repository.UserRepository;
 import com.banking.bankservice.service.UserService;
@@ -22,12 +23,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(Long id) {
-        return userRepository.getById(id).get();
+        return userRepository.getById(id)
+                .orElseThrow(() -> new NoSuchEntityException("Can't get User by id " + id));
     }
 
     @Override
     public User getByPhone(String phone) {
-        return userRepository.getByPhone(phone).get();
+        return userRepository.getByPhone(phone).orElseThrow(() -> new NoSuchEntityException(
+                "Can't get User by phone number " + phone));
     }
 
     @Override
